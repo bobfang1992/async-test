@@ -30,7 +30,7 @@ func NewSlice(start, end, step int) []int {
 func getPokemon(index int, outChannel chan<- []byte, wg *sync.WaitGroup) {
 	defer wg.Done()
 	client := http.Client{}
-	req, err := http.NewRequest(http.MethodGet, BASE_URL+strconv.Itoa(index+1), nil)
+	req, err := http.NewRequest(http.MethodGet, BASE_URL+strconv.Itoa((index+1)%800+1), nil)
 	if err != nil {
 		panic(err)
 	}
@@ -60,7 +60,7 @@ func getPokemons() {
 
 	result := make([]Result, 0)
 
-	for _, i := range NewSlice(10, 800, 20) {
+	for _, i := range NewSlice(10, 1600, 20) {
 		fmt.Printf("Getting %v pokemons\n", i)
 		start := time.Now()
 		wg := sync.WaitGroup{}
